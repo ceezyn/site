@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdStronauts - AI-Powered Ad Creation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0e27;
+            color: #ffffff;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Animated Starry Background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            background: #0a0e27;
+        }
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite ease-in-out;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .hero-bg {
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            position: relative;
+            z-index: 1;
+        }
+
+        .glass-effect {
+            background: rgba(10, 14, 39, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .cta-button, .ai-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover, .ai-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6);
+        }
+        .ai-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: #4f46e5;
+            border-color: rgba(99, 102, 241, 0.8);
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.4);
+        }
+        .portfolio-item {
+            transition: all 0.3s ease;
+        }
+        .portfolio-item:hover {
+             transform: scale(1.03);
+             box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+        }
+        /* Spinner for loading state */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #6366f1;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="scroll-smooth">
+    
+    <div class="stars" id="stars-container"></div>
+
+    <header class="fixed w-full z-20 glass-effect">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2">
+                <svg class="w-8 h-8 text-indigo-400 transform -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                <h1 class="text-3xl font-bold">Ad<span class="text-indigo-400">Stronauts</span></h1>
+            </a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#features" class="hover:text-indigo-400 transition">Features</a>
+                <a href="#ai-tools" class="hover:text-indigo-400 transition">AI Tools</a>
+                <a href="#about" class="hover:text-indigo-400 transition">Platform</a>
+                <a href="#contact" class="hover:text-indigo-400 transition">Get Started</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden glass-effect">
+            <a href="#features" class="block py-3 px-6 text-sm hover:bg-gray-700/50">Features</a>
+            <a href="#ai-tools" class="block py-3 px-6 text-sm hover:bg-gray-700/50">AI Tools</a>
+            <a href="#about" class="block py-3 px-6 text-sm hover:bg-gray-700/50">Platform</a>
+            <a href="#contact" class="block py-3 px-6 text-sm hover:bg-gray-700/50">Get Started</a>
+        </div>
+    </header>
+
+    <section class="hero-bg min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
+        <img src="https://placehold.co/400x400/0a0e27/ffffff?text=+" alt="Astronaut" class="absolute z-10 w-48 md:w-64 bottom-10 right-5 md:right-10 opacity-60 animate-bounce" style="animation-duration: 5s;">
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h2 class="text-4xl md:text-6xl font-bold mb-4">Create Stellar Ad Content with AI</h2>
+            <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">AdStronauts is your AI-powered copilot to generate stunning ad copy, graphics, and videos. Your creative mission starts here.</p>
+            <a href="#ai-tools" class="cta-button inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg">
+                Try the AI Tools
+            </a>
+        </div>
+    </section>
+
+    <section id="features" class="py-20 bg-gray-900/50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12">Your Creative Toolkit</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="service-card bg-gray-800 p-8 rounded-lg text-center">
+                    <div class="mb-4"> <svg class="w-16 h-16 mx-auto text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg> </div>
+                    <h3 class="text-2xl font-bold mb-2">Graphic Design Studio</h3>
+                    <p class="text-gray-400">Design eye-catching ad graphics with our easy-to-use templates.</p>
+                </div>
+                <div class="service-card bg-gray-800 p-8 rounded-lg text-center">
+                    <div class="mb-4"> <svg class="w-16 h-16 mx-auto text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> </div>
+                    <h3 class="text-2xl font-bold mb-2">Video Ad Creator</h3>
+                    <p class="text-gray-400">Produce professional-quality video ads in minutes, no experience required.</p>
+                </div>
+                <div class="service-card bg-gray-800 p-8 rounded-lg text-center">
+                    <div class="mb-4"> <svg class="w-16 h-16 mx-auto text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> </div>
+                    <h3 class="text-2xl font-bold mb-2">Social Post Automation</h3>
+                    <p class="text-gray-400">Plan and schedule your social content from a single command center.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- AI Tools Section -->
+    <section id="ai-tools" class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4">Launchpad: Your AI Creative Tools</h2>
+            <p class="text-center text-gray-400 max-w-2xl mx-auto mb-12">Let AI be your copilot. Use our Gemini-powered tools to brainstorm ideas and write compelling ad copy in seconds.</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- AI Ad Copywriter -->
+                <div class="glass-effect p-8 rounded-lg">
+                    <h3 class="text-3xl font-bold mb-6 text-center">✨ AI Ad Copywriter</h3>
+                    <form id="ad-copy-form">
+                        <div class="mb-4">
+                            <label for="product-name" class="block text-gray-300 mb-2">Product/Service Name</label>
+                            <input type="text" id="product-name" placeholder="e.g., Quantum Sneakers" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition">
+                        </div>
+                        <div class="mb-6">
+                            <label for="product-desc" class="block text-gray-300 mb-2">Brief Description</label>
+                            <textarea id="product-desc" rows="3" placeholder="e.g., Comfortable running shoes with self-tying laces and color-changing fabric." class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition"></textarea>
+                        </div>
+                        <div class="text-center mb-6">
+                            <button type="submit" id="ad-copy-button" class="ai-button bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg">
+                                Generate Ad Copy
+                            </button>
+                        </div>
+                    </form>
+                    <div id="ad-copy-loading" class="hidden justify-center items-center my-4">
+                        <div class="spinner"></div>
+                    </div>
+                    <div id="ad-copy-results" class="bg-gray-900/50 p-4 rounded-lg hidden">
+                        <pre class="whitespace-pre-wrap text-gray-300 font-sans"></pre>
+                    </div>
+                </div>
+
+                <!-- AI Campaign Idea Generator -->
+                <div class="glass-effect p-8 rounded-lg">
+                    <h3 class="text-3xl font-bold mb-6 text-center">✨ Campaign Idea Generator</h3>
+                    <form id="idea-generator-form">
+                        <div class="mb-6">
+                            <label for="idea-product-desc" class="block text-gray-300 mb-2">What is your product or service?</label>
+                            <textarea id="idea-product-desc" rows="4" placeholder="e.g., An app that uses AI to create personalized workout plans for busy professionals." class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition"></textarea>
+                        </div>
+                        <div class="text-center mb-6">
+                            <button type="submit" id="idea-generator-button" class="ai-button bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg">
+                                Generate Campaign Ideas
+                            </button>
+                        </div>
+                    </form>
+                    <div id="idea-generator-loading" class="hidden justify-center items-center my-4">
+                        <div class="spinner"></div>
+                    </div>
+                    <div id="idea-generator-results" class="space-y-4 hidden">
+                        <!-- AI Generated content will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="about" class="py-20 bg-gray-900/50">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <img src="https://placehold.co/600x400/1e293b/ffffff?text=AdStronauts+Platform" alt="Platform Screenshot" class="rounded-lg shadow-lg">
+                </div>
+                <div class="md:w-1/2 md:pl-12">
+                    <h2 class="text-4xl font-bold mb-4">The AdStronauts Platform</h2>
+                    <p class="text-gray-300 mb-4">AdStronauts was built for creators, marketers, and entrepreneurs. Our platform provides an intuitive suite of tools to streamline your creative workflow, taking the complexity out of ad creation.</p>
+                    <p class="text-gray-300">Go from idea to launch faster than ever before. Spend less time on tedious tasks and more time on what matters: growing your business.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12">Ready for Liftoff?</h2>
+            <div class="max-w-2xl mx-auto glass-effect p-8 rounded-lg">
+                <form>
+                    <div class="mb-4"> <label for="name" class="block text-gray-300 mb-2">Your Name</label> <input type="text" id="name" name="name" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition"> </div>
+                    <div class="mb-4"> <label for="email" class="block text-gray-300 mb-2">Email Address</label> <input type="email" id="email" name="email" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition"> </div>
+                    <div class="mb-4"> <label for="message" class="block text-gray-300 mb-2">Your Message</label> <textarea id="message" name="message" rows="4" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition"></textarea> </div>
+                    <div class="text-center"> <button type="submit" class="cta-button bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg"> Start Creating </button> </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900/50 py-8">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+            <p>&copy; 2025 AdStronauts. All Rights Reserved.</p>
+            <div class="flex justify-center space-x-4 mt-4">
+                <a href="#" class="hover:text-indigo-400">Facebook</a>
+                <a href="#" class="hover:text-indigo-400">Twitter</a>
+                <a href="#" class="hover:text-indigo-400">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // --- Basic UI Setup ---
+        const starsContainer = document.getElementById('stars-container');
+        const numStars = 150;
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            const size = Math.random() * 3;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+            star.style.animationDuration = `${Math.random() * 3 + 4}s`;
+            starsContainer.appendChild(star);
+        }
+
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                mobileMenu.classList.add('hidden');
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // --- Gemini API Integration ---
+
+        async function callGemini(prompt, isJson = false) {
+            const apiKey = ""; // API key is handled by the environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            
+            let payload = {
+                contents: [{ role: "user", parts: [{ text: prompt }] }],
+            };
+            
+            if (isJson) {
+                payload.generationConfig = {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            campaign_ideas: {
+                                type: "ARRAY",
+                                items: {
+                                    type: "OBJECT",
+                                    properties: {
+                                        theme: { type: "STRING" },
+                                        visual_ideas: { type: "ARRAY", items: { type: "STRING" } },
+                                        taglines: { type: "ARRAY", items: { type: "STRING" } },
+                                    },
+                                    required: ["theme", "visual_ideas", "taglines"]
+                                },
+                            },
+                        },
+                        required: ["campaign_ideas"]
+                    },
+                };
+            }
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                    throw new Error(`API call failed with status: ${response.status}`);
+                }
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts.length > 0) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    console.error("Unexpected API response structure:", result);
+                    return "Error: Received an empty or invalid response from the AI.";
+                }
+
+            } catch (error) {
+                console.error("Gemini API call error:", error);
+                return "Sorry, there was an error communicating with the AI. Please try again later.";
+            }
+        }
+
+        // --- AI Ad Copywriter Logic ---
+        const adCopyForm = document.getElementById('ad-copy-form');
+        const adCopyButton = document.getElementById('ad-copy-button');
+        const adCopyLoading = document.getElementById('ad-copy-loading');
+        const adCopyResults = document.getElementById('ad-copy-results');
+        const adCopyResultsPre = adCopyResults.querySelector('pre');
+
+        adCopyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const productName = document.getElementById('product-name').value;
+            const productDesc = document.getElementById('product-desc').value;
+
+            if (!productName.trim() || !productDesc.trim()) {
+                adCopyResultsPre.textContent = "Please fill out both product name and description.";
+                adCopyResults.classList.remove('hidden');
+                return;
+            }
+
+            adCopyButton.disabled = true;
+            adCopyResults.classList.add('hidden');
+            adCopyLoading.style.display = 'flex';
+            
+            const prompt = `You are a world-class advertising copywriter. Create compelling ad copy for a product.
+            - Product Name: ${productName}
+            - Description: ${productDesc}
+            
+            Generate the following in plain text:
+            - 3 short, punchy headlines (max 40 characters each).
+            - 1 primary text/description (2-3 sentences).`;
+
+            const resultText = await callGemini(prompt);
+            
+            adCopyResultsPre.textContent = resultText;
+            adCopyLoading.style.display = 'none';
+            adCopyResults.classList.remove('hidden');
+            adCopyButton.disabled = false;
+        });
+        
+        // --- AI Idea Generator Logic ---
+        const ideaForm = document.getElementById('idea-generator-form');
+        const ideaButton = document.getElementById('idea-generator-button');
+        const ideaLoading = document.getElementById('idea-generator-loading');
+        const ideaResults = document.getElementById('idea-generator-results');
+
+        ideaForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const productDesc = document.getElementById('idea-product-desc').value;
+
+            if (!productDesc.trim()) {
+                ideaResults.innerHTML = `<p class="text-red-400">Please describe your product or service.</p>`;
+                ideaResults.classList.remove('hidden');
+                return;
+            }
+
+            ideaButton.disabled = true;
+            ideaResults.classList.add('hidden');
+            ideaLoading.style.display = 'flex';
+            ideaResults.innerHTML = ''; // Clear previous results
+
+            const prompt = `You are an expert marketing strategist. For a product/service described as "${productDesc}", generate 3 distinct campaign ideas. For each idea, provide a "theme" (a short, catchy concept), a list of 3 "visual_ideas", and a list of 3 potential "taglines".`;
+
+            const jsonString = await callGemini(prompt, true);
+            
+            try {
+                const data = JSON.parse(jsonString);
+                renderCampaignIdeas(data.campaign_ideas);
+            } catch (error) {
+                console.error("Error parsing JSON response:", error, jsonString);
+                ideaResults.innerHTML = `<p class="text-red-400">Sorry, the AI returned an unexpected format. Please try again with a different prompt.</p>`;
+            }
+
+            ideaLoading.style.display = 'none';
+            ideaResults.classList.remove('hidden');
+            ideaButton.disabled = false;
+        });
+
+        function renderCampaignIdeas(ideas) {
+            if (!ideas || ideas.length === 0) {
+                 ideaResults.innerHTML = `<p class="text-gray-400">The AI couldn't generate ideas for this topic. Try being more specific.</p>`;
+                 return;
+            }
+            
+            ideas.forEach(idea => {
+                const ideaCard = document.createElement('div');
+                ideaCard.className = 'bg-gray-800/70 p-6 rounded-lg border border-gray-700';
+
+                let visualItems = '';
+                if(idea.visual_ideas && idea.visual_ideas.length > 0) {
+                   idea.visual_ideas.forEach(item => {
+                        visualItems += `<li class="text-gray-400">${item}</li>`;
+                    });
+                }
+               
+                let taglineItems = '';
+                if(idea.taglines && idea.taglines.length > 0) {
+                    idea.taglines.forEach(item => {
+                        taglineItems += `<li class="text-indigo-300 italic">"${item}"</li>`;
+                    });
+                }
+
+                ideaCard.innerHTML = `
+                    <h4 class="text-xl font-bold text-indigo-400 mb-2">${idea.theme || 'Untitled Idea'}</h4>
+                    <p class="font-semibold text-white mt-4 mb-2">Visual Ideas:</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        ${visualItems || '<li>No visuals suggested.</li>'}
+                    </ul>
+                    <p class="font-semibold text-white mt-4 mb-2">Taglines:</p>
+                    <ul class="space-y-1">
+                        ${taglineItems || '<li>No taglines suggested.</li>'}
+                    </ul>
+                `;
+                ideaResults.appendChild(ideaCard);
+            });
+        }
+    </script>
+</body>
+</html>
