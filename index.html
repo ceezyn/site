@@ -11,11 +11,11 @@
             font-family: 'Inter', sans-serif;
             background-color: #0a0e27;
             color: #ffffff;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
         }
 
         /* Animated Starry Background */
-        .stars {
+        .stars-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -35,78 +35,142 @@
             50% { opacity: 1; transform: scale(1); }
         }
 
-        .hero-bg {
-            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-            position: relative;
-            z-index: 1;
+        /* Meteor Shower Animation */
+        .meteor {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px #fff;
+            animation: meteor-fall 5s linear infinite;
+        }
+        @keyframes meteor-fall {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-500px, 500px);
+                opacity: 0;
+            }
         }
 
-        .glass-effect {
-            background: rgba(10, 14, 39, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .cta-button, .ai-button {
-            transition: all 0.3s ease;
-        }
-        .cta-button:hover, .ai-button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6);
-        }
-        .ai-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .service-card {
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-        }
-        .service-card:hover {
-            transform: translateY(-10px);
-            background: #4f46e5;
-            border-color: rgba(99, 102, 241, 0.8);
-            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.4);
-        }
-        .portfolio-item {
-            transition: all 0.3s ease;
-        }
-        .portfolio-item:hover {
-             transform: scale(1.03);
-             box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-        }
-        /* Spinner for loading state */
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top: 4px solid #6366f1;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+        /* Hero section with your logo EMBEDDED */
+        .hero-bg {
+            background-image: linear-gradient(rgba(10, 14, 39, 0.5), rgba(10, 14, 39, 0.8)), url('data:image/jpeg;base64,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');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Holographic Glow Effect */
+        .glass-effect {
+            background: rgba(10, 14, 39, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(79, 70, 229, 0.5);
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
+            transition: all 0.3s ease;
+        }
+        .glass-effect:hover {
+             border-color: rgba(167, 139, 250, 0.7);
+             box-shadow: 0 0 30px rgba(167, 139, 250, 0.4);
+        }
+
+        .cta-button, .ai-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+        }
+        .cta-button:hover, .ai-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.7);
+        }
+        .ai-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(55, 65, 81, 0.5);
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: linear-gradient(145deg, #4f46e5, #a78bfa);
+            border-color: rgba(167, 139, 250, 0.8);
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.4);
+        }
+       
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #a78bfa;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+       
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: #1e293b;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            max-width: 90%;
+            width: 500px;
+            text-align: center;
+            border: 1px solid #4f46e5;
+            box-shadow: 0 0 25px rgba(79, 70, 229, 0.5);
+        }
+    </style>
 </head>
 <body class="scroll-smooth">
     
-    <div class="stars" id="stars-container"></div>
+    <div class="stars-container" id="stars-container"></div>
+    <div id="alert-modal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <p id="alert-modal-message" class="mb-6 text-lg"></p>
+            <button id="alert-modal-close" class="ai-button bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-8 rounded-full">Close</button>
+        </div>
+    </div>
+
 
     <header class="fixed w-full z-20 glass-effect">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center space-x-2">
-                <svg class="w-8 h-8 text-indigo-400 transform -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+            <a href="#" class="flex items-center space-x-3">
+                <svg class="w-10 h-10 text-indigo-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14.2324 2.90039L12.0003 10.0001L14.2324 9.40039L15.5324 12.0004L10.0002 12.6001L8.46973 15.0002L7.00016 11.4004L2.90039 10.0001L7.00016 8.50039L8.46973 4.90015L10.0002 7.50039L14.2324 2.90039Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M19.5 12.5C19.5 12.5 20.4444 12.5 21.5 12.5C22 12.5 22.5 13 22.5 13.5C22.5 14.5 21 16.5 19.5 17.5L18 19L16.5 17.5C15 16.5 13.5 14.5 13.5 13.5C13.5 13 14 12.5 14.5 12.5C15.5556 12.5 16.5 12.5 16.5 12.5M19.5 12.5C18.5 12.5 18 11.5 18 10.5V9.5C18 8.5 18.5 7.5 19.5 7.5C20.5 7.5 21 8.5 21 9.5V10.5C21 11.5 20.5 12.5 19.5 12.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
                 <h1 class="text-3xl font-bold">Ad<span class="text-indigo-400">Stronauts</span></h1>
             </a>
-            <nav class="hidden md:flex space-x-8">
+            <nav class="hidden md:flex items-center space-x-8">
                 <a href="#features" class="hover:text-indigo-400 transition">Features</a>
                 <a href="#ai-tools" class="hover:text-indigo-400 transition">AI Tools</a>
                 <a href="#about" class="hover:text-indigo-400 transition">Platform</a>
                 <a href="#contact" class="hover:text-indigo-400 transition">Get Started</a>
+                 <button id="download-button" class="cta-button bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full text-sm flex items-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    <span>Download</span>
+                </button>
             </nav>
             <button id="mobile-menu-button" class="md:hidden text-white p-2">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -121,14 +185,7 @@
     </header>
 
     <section class="hero-bg min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
-        <img src="https://placehold.co/400x400/0a0e27/ffffff?text=+" alt="Astronaut" class="absolute z-10 w-48 md:w-64 bottom-10 right-5 md:right-10 opacity-60 animate-bounce" style="animation-duration: 5s;">
-        <div class="container mx-auto px-6 text-center relative z-10">
-            <h2 class="text-4xl md:text-6xl font-bold mb-4">Create Stellar Ad Content with AI</h2>
-            <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">AdStronauts is your AI-powered copilot to generate stunning ad copy, graphics, and videos. Your creative mission starts here.</p>
-            <a href="#ai-tools" class="cta-button inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg">
-                Try the AI Tools
-            </a>
-        </div>
+        <img src="https://assets.stickpng.com/images/580b585b2edb169251db0-9.png" alt="Astronaut" class="absolute z-10 w-32 md:w-56 bottom-20 left-5 md:left-10 opacity-80 animate-pulse" style="animation-duration: 5s;" onerror="this.style.display='none'">
     </section>
 
     <section id="features" class="py-20 bg-gray-900/50">
@@ -136,32 +193,29 @@
             <h2 class="text-4xl font-bold text-center mb-12">Your Creative Toolkit</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="service-card bg-gray-800 p-8 rounded-lg text-center">
-                    <div class="mb-4"> <svg class="w-16 h-16 mx-auto text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg> </div>
+                    <div class="mb-4"> <svg class="w-16 h-16 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg> </div>
                     <h3 class="text-2xl font-bold mb-2">Graphic Design Studio</h3>
-                    <p class="text-gray-400">Design eye-catching ad graphics with our easy-to-use templates.</p>
+                    <p class="text-gray-300">Design eye-catching ad graphics with our easy-to-use templates.</p>
                 </div>
                 <div class="service-card bg-gray-800 p-8 rounded-lg text-center">
-                    <div class="mb-4"> <svg class="w-16 h-16 mx-auto text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> </div>
+                    <div class="mb-4"> <svg class="w-16 h-16 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> </div>
                     <h3 class="text-2xl font-bold mb-2">Video Ad Creator</h3>
-                    <p class="text-gray-400">Produce professional-quality video ads in minutes, no experience required.</p>
+                    <p class="text-gray-300">Produce professional-quality video ads in minutes, no experience required.</p>
                 </div>
                 <div class="service-card bg-gray-800 p-8 rounded-lg text-center">
-                    <div class="mb-4"> <svg class="w-16 h-16 mx-auto text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> </div>
+                    <div class="mb-4"> <svg class="w-16 h-16 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> </div>
                     <h3 class="text-2xl font-bold mb-2">Social Post Automation</h3>
-                    <p class="text-gray-400">Plan and schedule your social content from a single command center.</p>
+                    <p class="text-gray-300">Plan and schedule your social content from a single command center.</p>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- AI Tools Section -->
     <section id="ai-tools" class="py-20">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-4">Launchpad: Your AI Creative Tools</h2>
             <p class="text-center text-gray-400 max-w-2xl mx-auto mb-12">Let AI be your copilot. Use our Gemini-powered tools to brainstorm ideas and write compelling ad copy in seconds.</p>
-
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- AI Ad Copywriter -->
                 <div class="glass-effect p-8 rounded-lg">
                     <h3 class="text-3xl font-bold mb-6 text-center">✨ AI Ad Copywriter</h3>
                     <form id="ad-copy-form">
@@ -171,7 +225,7 @@
                         </div>
                         <div class="mb-6">
                             <label for="product-desc" class="block text-gray-300 mb-2">Brief Description</label>
-                            <textarea id="product-desc" rows="3" placeholder="e.g., Comfortable running shoes with self-tying laces and color-changing fabric." class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition"></textarea>
+                            <textarea id="product-desc" rows="3" placeholder="e.g., Comfortable running shoes with self-tying laces." class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition"></textarea>
                         </div>
                         <div class="text-center mb-6">
                             <button type="submit" id="ad-copy-button" class="ai-button bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg">
@@ -187,13 +241,12 @@
                     </div>
                 </div>
 
-                <!-- AI Campaign Idea Generator -->
                 <div class="glass-effect p-8 rounded-lg">
                     <h3 class="text-3xl font-bold mb-6 text-center">✨ Campaign Idea Generator</h3>
                     <form id="idea-generator-form">
                         <div class="mb-6">
                             <label for="idea-product-desc" class="block text-gray-300 mb-2">What is your product or service?</label>
-                            <textarea id="idea-product-desc" rows="4" placeholder="e.g., An app that uses AI to create personalized workout plans for busy professionals." class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition"></textarea>
+                            <textarea id="idea-product-desc" rows="4" placeholder="e.g., AI workout plans for busy professionals." class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition"></textarea>
                         </div>
                         <div class="text-center mb-6">
                             <button type="submit" id="idea-generator-button" class="ai-button bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg">
@@ -205,19 +258,17 @@
                         <div class="spinner"></div>
                     </div>
                     <div id="idea-generator-results" class="space-y-4 hidden">
-                        <!-- AI Generated content will be injected here -->
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-
     <section id="about" class="py-20 bg-gray-900/50">
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-8 md:mb-0">
-                    <img src="https://placehold.co/600x400/1e293b/ffffff?text=AdStronauts+Platform" alt="Platform Screenshot" class="rounded-lg shadow-lg">
+                    <img src="https://placehold.co/600x400/1e293b/a78bfa?text=AdStronauts+Platform" alt="Platform Screenshot" class="rounded-lg shadow-lg">
                 </div>
                 <div class="md:w-1/2 md:pl-12">
                     <h2 class="text-4xl font-bold mb-4">The AdStronauts Platform</h2>
@@ -232,11 +283,11 @@
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">Ready for Liftoff?</h2>
             <div class="max-w-2xl mx-auto glass-effect p-8 rounded-lg">
-                <form>
-                    <div class="mb-4"> <label for="name" class="block text-gray-300 mb-2">Your Name</label> <input type="text" id="name" name="name" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition"> </div>
-                    <div class="mb-4"> <label for="email" class="block text-gray-300 mb-2">Email Address</label> <input type="email" id="email" name="email" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition"> </div>
-                    <div class="mb-4"> <label for="message" class="block text-gray-300 mb-2">Your Message</label> <textarea id="message" name="message" rows="4" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition"></textarea> </div>
-                    <div class="text-center"> <button type="submit" class="cta-button bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg"> Start Creating </button> </div>
+                <form id="contact-form">
+                    <div class="mb-4"> <label for="name" class="block text-gray-300 mb-2">Your Name</label> <input type="text" id="name" name="name" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition" required> </div>
+                    <div class="mb-4"> <label for="email" class="block text-gray-300 mb-2">Email Address</label> <input type="email" id="email" name="email" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition" required> </div>
+                    <div class="mb-4"> <label for="message" class="block text-gray-300 mb-2">Your Message</label> <textarea id="message" name="message" rows="4" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition" required></textarea> </div>
+                    <div class="text-center"> <button type="submit" class="cta-button bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg"> Transmit Message </button> </div>
                 </form>
             </div>
         </div>
@@ -254,210 +305,212 @@
     </footer>
     
     <script>
-        // --- Basic UI Setup ---
-        const starsContainer = document.getElementById('stars-container');
-        const numStars = 150;
-        for (let i = 0; i < numStars; i++) {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            const size = Math.random() * 3;
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-            star.style.top = `${Math.random() * 100}%`;
-            star.style.left = `${Math.random() * 100}%`;
-            star.style.animationDelay = `${Math.random() * 5}s`;
-            star.style.animationDuration = `${Math.random() * 3 + 4}s`;
-            starsContainer.appendChild(star);
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const starsContainer = document.getElementById('stars-container');
+            const numStars = 150;
+            const numMeteors = 5;
 
-        const menuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        menuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                star.style.animationDuration = `${Math.random() * 3 + 4}s`;
+                starsContainer.appendChild(star);
+            }
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                mobileMenu.classList.add('hidden');
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+            for (let i = 0; i < numMeteors; i++) {
+                const meteor = document.createElement('div');
+                meteor.classList.add('meteor');
+                meteor.style.top = `${Math.random() * 50 - 50}%`;
+                meteor.style.left = `${Math.random() * 100}%`;
+                meteor.style.animationDelay = `${Math.random() * 10}s`;
+                starsContainer.appendChild(meteor);
+            }
+
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 });
             });
-        });
 
-        // --- Gemini API Integration ---
+            const alertModal = document.getElementById('alert-modal');
+            const alertModalMessage = document.getElementById('alert-modal-message');
+            const alertModalClose = document.getElementById('alert-modal-close');
 
-        async function callGemini(prompt, isJson = false) {
-            const apiKey = ""; // API key is handled by the environment
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-            
-            let payload = {
-                contents: [{ role: "user", parts: [{ text: prompt }] }],
-            };
-            
-            if (isJson) {
-                payload.generationConfig = {
-                    responseMimeType: "application/json",
-                    responseSchema: {
-                        type: "OBJECT",
-                        properties: {
-                            campaign_ideas: {
-                                type: "ARRAY",
-                                items: {
-                                    type: "OBJECT",
-                                    properties: {
-                                        theme: { type: "STRING" },
-                                        visual_ideas: { type: "ARRAY", items: { type: "STRING" } },
-                                        taglines: { type: "ARRAY", items: { type: "STRING" } },
+            function showAlert(message) {
+                alertModalMessage.textContent = message;
+                alertModal.classList.remove('hidden');
+            }
+            alertModalClose.addEventListener('click', () => {
+                alertModal.classList.add('hidden');
+            });
+
+            async function callGemini(prompt, isJson = false) {
+                 const apiKey = "";
+                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                let payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+
+                if (isJson) {
+                    payload.generationConfig = {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                campaign_ideas: {
+                                    type: "ARRAY",
+                                    items: {
+                                        type: "OBJECT",
+                                        properties: {
+                                            theme: { type: "STRING" },
+                                            visual_ideas: { type: "ARRAY", items: { type: "STRING" } },
+                                            taglines: { type: "ARRAY", items: { type: "STRING" } },
+                                        },
+                                        required: ["theme", "visual_ideas", "taglines"]
                                     },
-                                    required: ["theme", "visual_ideas", "taglines"]
                                 },
                             },
+                            required: ["campaign_ideas"]
                         },
-                        required: ["campaign_ideas"]
-                    },
-                };
-            }
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (!response.ok) {
-                    throw new Error(`API call failed with status: ${response.status}`);
+                    };
                 }
-                const result = await response.json();
-                
-                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts.length > 0) {
-                    return result.candidates[0].content.parts[0].text;
-                } else {
-                    console.error("Unexpected API response structure:", result);
-                    return "Error: Received an empty or invalid response from the AI.";
-                }
-
-            } catch (error) {
-                console.error("Gemini API call error:", error);
-                return "Sorry, there was an error communicating with the AI. Please try again later.";
-            }
-        }
-
-        // --- AI Ad Copywriter Logic ---
-        const adCopyForm = document.getElementById('ad-copy-form');
-        const adCopyButton = document.getElementById('ad-copy-button');
-        const adCopyLoading = document.getElementById('ad-copy-loading');
-        const adCopyResults = document.getElementById('ad-copy-results');
-        const adCopyResultsPre = adCopyResults.querySelector('pre');
-
-        adCopyForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const productName = document.getElementById('product-name').value;
-            const productDesc = document.getElementById('product-desc').value;
-
-            if (!productName.trim() || !productDesc.trim()) {
-                adCopyResultsPre.textContent = "Please fill out both product name and description.";
-                adCopyResults.classList.remove('hidden');
-                return;
-            }
-
-            adCopyButton.disabled = true;
-            adCopyResults.classList.add('hidden');
-            adCopyLoading.style.display = 'flex';
-            
-            const prompt = `You are a world-class advertising copywriter. Create compelling ad copy for a product.
-            - Product Name: ${productName}
-            - Description: ${productDesc}
-            
-            Generate the following in plain text:
-            - 3 short, punchy headlines (max 40 characters each).
-            - 1 primary text/description (2-3 sentences).`;
-
-            const resultText = await callGemini(prompt);
-            
-            adCopyResultsPre.textContent = resultText;
-            adCopyLoading.style.display = 'none';
-            adCopyResults.classList.remove('hidden');
-            adCopyButton.disabled = false;
-        });
-        
-        // --- AI Idea Generator Logic ---
-        const ideaForm = document.getElementById('idea-generator-form');
-        const ideaButton = document.getElementById('idea-generator-button');
-        const ideaLoading = document.getElementById('idea-generator-loading');
-        const ideaResults = document.getElementById('idea-generator-results');
-
-        ideaForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const productDesc = document.getElementById('idea-product-desc').value;
-
-            if (!productDesc.trim()) {
-                ideaResults.innerHTML = `<p class="text-red-400">Please describe your product or service.</p>`;
-                ideaResults.classList.remove('hidden');
-                return;
-            }
-
-            ideaButton.disabled = true;
-            ideaResults.classList.add('hidden');
-            ideaLoading.style.display = 'flex';
-            ideaResults.innerHTML = ''; // Clear previous results
-
-            const prompt = `You are an expert marketing strategist. For a product/service described as "${productDesc}", generate 3 distinct campaign ideas. For each idea, provide a "theme" (a short, catchy concept), a list of 3 "visual_ideas", and a list of 3 potential "taglines".`;
-
-            const jsonString = await callGemini(prompt, true);
-            
-            try {
-                const data = JSON.parse(jsonString);
-                renderCampaignIdeas(data.campaign_ideas);
-            } catch (error) {
-                console.error("Error parsing JSON response:", error, jsonString);
-                ideaResults.innerHTML = `<p class="text-red-400">Sorry, the AI returned an unexpected format. Please try again with a different prompt.</p>`;
-            }
-
-            ideaLoading.style.display = 'none';
-            ideaResults.classList.remove('hidden');
-            ideaButton.disabled = false;
-        });
-
-        function renderCampaignIdeas(ideas) {
-            if (!ideas || ideas.length === 0) {
-                 ideaResults.innerHTML = `<p class="text-gray-400">The AI couldn't generate ideas for this topic. Try being more specific.</p>`;
-                 return;
-            }
-            
-            ideas.forEach(idea => {
-                const ideaCard = document.createElement('div');
-                ideaCard.className = 'bg-gray-800/70 p-6 rounded-lg border border-gray-700';
-
-                let visualItems = '';
-                if(idea.visual_ideas && idea.visual_ideas.length > 0) {
-                   idea.visual_ideas.forEach(item => {
-                        visualItems += `<li class="text-gray-400">${item}</li>`;
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
                     });
+                    if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                    const result = await response.json();
+                    if (result.candidates && result.candidates[0].content.parts[0]) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        throw new Error("Invalid response structure from API.");
+                    }
+                } catch (error) {
+                    console.error("Gemini API call error:", error);
+                    throw error;
                 }
-               
-                let taglineItems = '';
-                if(idea.taglines && idea.taglines.length > 0) {
-                    idea.taglines.forEach(item => {
-                        taglineItems += `<li class="text-indigo-300 italic">"${item}"</li>`;
-                    });
+            }
+            
+            const adCopyForm = document.getElementById('ad-copy-form');
+            const adCopyButton = document.getElementById('ad-copy-button');
+            const adCopyLoading = document.getElementById('ad-copy-loading');
+            const adCopyResults = document.getElementById('ad-copy-results');
+            const adCopyResultsPre = adCopyResults.querySelector('pre');
+            adCopyForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const productName = document.getElementById('product-name').value;
+                const productDesc = document.getElementById('product-desc').value;
+                if (!productName.trim() || !productDesc.trim()) {
+                    showAlert("Please fill out both product name and description.");
+                    return;
                 }
-
-                ideaCard.innerHTML = `
-                    <h4 class="text-xl font-bold text-indigo-400 mb-2">${idea.theme || 'Untitled Idea'}</h4>
-                    <p class="font-semibold text-white mt-4 mb-2">Visual Ideas:</p>
-                    <ul class="list-disc list-inside space-y-1">
-                        ${visualItems || '<li>No visuals suggested.</li>'}
-                    </ul>
-                    <p class="font-semibold text-white mt-4 mb-2">Taglines:</p>
-                    <ul class="space-y-1">
-                        ${taglineItems || '<li>No taglines suggested.</li>'}
-                    </ul>
-                `;
-                ideaResults.appendChild(ideaCard);
+                adCopyButton.disabled = true;
+                adCopyResults.classList.add('hidden');
+                adCopyLoading.style.display = 'flex';
+                const prompt = `As a world-class ad copywriter, create compelling ad copy for:
+                - Product: ${productName}
+                - Description: ${productDesc}
+                Generate: 3 short headlines (max 40 chars) and 1 primary description (2-3 sentences).`;
+                try {
+                    const resultText = await callGemini(prompt);
+                    adCopyResultsPre.textContent = resultText;
+                    adCopyResults.classList.remove('hidden');
+                } catch (error) {
+                    showAlert("Error generating ad copy. Please try again later.");
+                } finally {
+                    adCopyLoading.style.display = 'none';
+                    adCopyButton.disabled = false;
+                }
             });
-        }
+
+            const ideaForm = document.getElementById('idea-generator-form');
+            const ideaButton = document.getElementById('idea-generator-button');
+            const ideaLoading = document.getElementById('idea-generator-loading');
+            const ideaResults = document.getElementById('idea-generator-results');
+            ideaForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const productDesc = document.getElementById('idea-product-desc').value;
+                if (!productDesc.trim()) {
+                    showAlert("Please describe your product or service.");
+                    return;
+                }
+                ideaButton.disabled = true;
+                ideaResults.classList.add('hidden');
+                ideaLoading.style.display = 'flex';
+                ideaResults.innerHTML = '';
+                const prompt = `As a marketing strategist, generate 3 distinct campaign ideas for: "${productDesc}". For each, provide a "theme", 3 "visual_ideas", and 3 "taglines".`;
+                try {
+                    const jsonString = await callGemini(prompt, true);
+                    const data = JSON.parse(jsonString);
+                    renderCampaignIdeas(data.campaign_ideas);
+                    ideaResults.classList.remove('hidden');
+                } catch (error) {
+                    showAlert("The AI returned an unexpected format. Please try a different prompt.");
+                } finally {
+                    ideaLoading.style.display = 'none';
+                    ideaButton.disabled = false;
+                }
+            });
+
+            function renderCampaignIdeas(ideas) {
+                if (!ideas || ideas.length === 0) {
+                    ideaResults.innerHTML = `<p class="text-gray-400">The AI couldn't generate ideas. Try being more specific.</p>`;
+                    return;
+                }
+                ideas.forEach(idea => {
+                    const ideaCard = document.createElement('div');
+                    ideaCard.className = 'bg-gray-800/70 p-6 rounded-lg border border-gray-700';
+                    const visualItems = (idea.visual_ideas || []).map(item => `<li class="text-gray-400">${item}</li>`).join('');
+                    const taglineItems = (idea.taglines || []).map(item => `<li class="text-indigo-300 italic">"${item}"</li>`).join('');
+                    ideaCard.innerHTML = `<h4 class="text-xl font-bold text-purple-400 mb-2">${idea.theme || 'Untitled Idea'}</h4>
+                        <p class="font-semibold text-white mt-4 mb-2">Visual Ideas:</p>
+                        <ul class="list-disc list-inside space-y-1">${visualItems || '<li>No visuals suggested.</li>'}</ul>
+                        <p class="font-semibold text-white mt-4 mb-2">Taglines:</p>
+                        <ul class="space-y-1">${taglineItems || '<li>No taglines suggested.</li>'}</ul>`;
+                    ideaResults.appendChild(ideaCard);
+                });
+            }
+
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                showAlert("Thank you for your message! We'll be in touch soon.");
+                contactForm.reset();
+            });
+
+            // Download Button Functionality
+            const downloadButton = document.getElementById('download-button');
+            downloadButton.addEventListener('click', () => {
+                const pageHTML = document.documentElement.outerHTML;
+                const blob = new Blob([pageHTML], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'adstronauts_website.html';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        });
     </script>
 </body>
 </html>
