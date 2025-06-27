@@ -5,13 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdStronauts - AI-Powered Ad Creation</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --neon-blue: #00f6ff;
+            --neon-pink: #ff00ff;
+            --dark-bg: #0a0e27;
+            --glow-color: rgba(0, 246, 255, 0.5);
+            --glow-color-pink: rgba(255, 0, 255, 0.5);
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0a0e27;
+            background-color: var(--dark-bg);
             color: #ffffff;
             overflow-x: hidden;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
         }
 
         /* --- Background Effects --- */
@@ -22,87 +36,87 @@
             width: 100%;
             height: 100%;
             z-index: -10;
-            background: #0a0e27;
+            background-color: var(--dark-bg);
         }
         .star {
             position: absolute;
             background-color: white;
             border-radius: 50%;
-            animation: twinkle 5s infinite ease-in-out;
+            animation: twinkle 7s infinite ease-in-out;
         }
         @keyframes twinkle {
-            0%, 100% { opacity: 0.5; transform: scale(0.8); }
+            0%, 100% { opacity: 0.4; transform: scale(0.8); }
             50% { opacity: 1; transform: scale(1); }
         }
 
         .shooting-star {
             position: absolute;
             height: 2px;
-            background: linear-gradient(-45deg, #fff, rgba(255, 255, 255, 0));
+            background: linear-gradient(-45deg, var(--neon-blue), rgba(255, 255, 255, 0));
             border-radius: 999px;
-            filter: drop-shadow(0 0 6px #fff);
-            animation: tail 3s ease-in-out infinite, shooting 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px var(--neon-blue));
+            animation: tail 4s ease-in-out infinite, shooting 4s ease-in-out infinite;
         }
         @keyframes tail {
             0% { width: 0; }
-            30% { width: 100px; }
+            30% { width: 120px; }
             100% { width: 0; }
         }
         @keyframes shooting {
             0% { transform: translateX(0); }
-            100% { transform: translateX(300px); }
+            100% { transform: translateX(400px); }
         }
 
         .galaxy {
             position: absolute;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(ellipse at center, rgba(167, 139, 250, 0) 0%, rgba(167, 139, 250, 0.2) 40%, rgba(167, 139, 250, 0) 70%);
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(ellipse at center, rgba(0, 246, 255, 0.3) 0%, rgba(255, 0, 255, 0.2) 40%, transparent 70%);
             border-radius: 50%;
-            animation: spin 60s linear infinite;
-            opacity: 0.3;
+            animation: spin 80s linear infinite;
+            filter: blur(5px);
         }
         @keyframes spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-
-        /* --- Hero and General UI --- */
+        
         .hero-bg {
-            background-image: linear-gradient(rgba(10, 14, 39, 0.6), rgba(10, 14, 39, 0.9)), url('data:image/jpeg;base64,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');
-            background-size: cover;
-            background-position: center;
+            background-color: #0a0e27;
             position: relative;
             z-index: 1;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 5rem; /* Account for header */
         }
 
-        /* Holographic Glow Effect */
         .glass-effect {
-            background: rgba(10, 14, 39, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(79, 70, 229, 0.5);
-            box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
+            background: rgba(10, 14, 39, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 25px var(--glow-color);
             transition: all 0.3s ease;
         }
         .glass-effect:hover {
-             border-color: rgba(167, 139, 250, 0.7);
-             box-shadow: 0 0 30px rgba(167, 139, 250, 0.4);
+             border-color: var(--neon-pink);
+             box-shadow: 0 0 35px var(--glow-color-pink);
         }
 
         .cta-button, .ai-button {
             transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+            box-shadow: 0 0 15px var(--glow-color);
             animation: pulse-button 2s infinite;
         }
         @keyframes pulse-button {
-            0% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.5); }
-            50% { box-shadow: 0 0 25px rgba(167, 139, 250, 0.8); }
-            100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.5); }
+            0% { box-shadow: 0 0 15px var(--glow-color); }
+            50% { box-shadow: 0 0 25px var(--glow-color-pink); }
+            100% { box-shadow: 0 0 15px var(--glow-color); }
         }
 
         .ai-button:hover {
             transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.7);
         }
         .ai-button:disabled {
             opacity: 0.5;
@@ -112,28 +126,13 @@
             animation: none;
         }
         
-        .service-card {
-            transition: all 0.3s ease;
-            border: 1px solid rgba(55, 65, 81, 0.5);
-        }
-        .service-card:hover {
-            transform: translateY(-10px);
-            background: linear-gradient(145deg, #4f46e5, #a78bfa);
-            border-color: rgba(167, 139, 250, 0.8);
-            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.4);
-        }
-       
         .spinner {
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top: 4px solid #a78bfa;
+            border-top: 4px solid var(--neon-pink);
             width: 40px;
             height: 40px;
             animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
        
         .modal-backdrop {
@@ -156,47 +155,38 @@
             max-width: 90%;
             width: 500px;
             text-align: center;
-            border: 1px solid #4f46e5;
-            box-shadow: 0 0 25px rgba(79, 70, 229, 0.5);
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 25px var(--glow-color);
         }
 
-        /* Input focus animation */
-        input:focus, textarea:focus {
-            border-color: #a78bfa !important;
-            box-shadow: 0 0 15px rgba(167, 139, 250, 0.5);
+        .pricing-card {
+            border: 1px solid var(--neon-blue);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px var(--glow-color);
+        }
+        .pricing-card.popular {
+            border-color: var(--neon-pink);
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px var(--glow-color-pink);
         }
         
-        /* Navigation link hover */
-        header nav a {
-            position: relative;
-        }
-        header nav a::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            transform: scaleX(0);
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: #a78bfa;
-            transform-origin: bottom right;
-            transition: transform 0.25s ease-out;
-        }
-        header nav a:hover::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
-        }
-        
-        /* Typing effect cursor */
-        .typing-cursor {
-            display: inline-block;
-            width: 8px;
-            height: 1em;
-            background-color: #a78bfa;
-            animation: blink-cursor 0.7s infinite;
-        }
-        @keyframes blink-cursor {
-            50% { opacity: 0; }
+        .stat-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: conic-gradient(var(--neon-pink) var(--p, 0), #374151 0);
+            transition: --p 1.5s ease-in-out;
+            border: 2px solid var(--neon-pink);
+            box-shadow: 0 0 15px var(--glow-color-pink);
         }
     </style>
 </head>
@@ -210,79 +200,167 @@
         </div>
     </div>
 
-
     <header class="fixed w-full z-20 glass-effect">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <svg class="w-10 h-10 text-indigo-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14.2324 2.90039L12.0003 10.0001L14.2324 9.40039L15.5324 12.0004L10.0002 12.6001L8.46973 15.0002L7.00016 11.4004L2.90039 10.0001L7.00016 8.50039L8.46973 4.90015L10.0002 7.50039L14.2324 2.90039Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M19.5 12.5C19.5 12.5 20.4444 12.5 21.5 12.5C22 12.5 22.5 13 22.5 13.5C22.5 14.5 21 16.5 19.5 17.5L18 19L16.5 17.5C15 16.5 13.5 14.5 13.5 13.5C13.5 13 14 12.5 14.5 12.5C15.5556 12.5 16.5 12.5 16.5 12.5M19.5 12.5C18.5 12.5 18 11.5 18 10.5V9.5C18 8.5 18.5 7.5 19.5 7.5C20.5 7.5 21 8.5 21 9.5V10.5C21 11.5 20.5 12.5 19.5 12.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                 <svg class="w-10 h-10 text-[var(--neon-blue)] transform -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                 <div class="flex flex-col">
-                    <h1 class="text-3xl font-bold">Ad<span class="text-indigo-400">Stronauts</span></h1>
-                    <span class="text-xs text-gray-400 -mt-1">Designed by Dylan R.</span>
+                    <h1 class="text-3xl font-bold">Ad<span class="text-[var(--neon-blue)]">Stronauts</span></h1>
+                    <span class="text-xs text-gray-400 -mt-1 font-sans">Designed by Dylan R.</span>
                 </div>
             </div>
             <nav class="hidden md:flex items-center space-x-8">
-                <a href="#features" class="hover:text-indigo-400 transition">Features</a>
-                <a href="#ai-tools" class="hover:text-indigo-400 transition">AI Tools</a>
-                <a href="#about" class="hover:text-indigo-400 transition">Platform</a>
-                <a href="#contact" class="hover:text-indigo-400 transition">Get Started</a>
+                <a href="#why-us" class="hover:text-[var(--neon-pink)] transition">Why Us</a>
+                <a href="#statistics" class="hover:text-[var(--neon-pink)] transition">Statistics</a>
+                <a href="#pricing" class="hover:text-[var(--neon-pink)] transition">Pricing</a>
+                <a href="#ai-tools" class="hover:text-[var(--neon-pink)] transition">AI Tools</a>
+                <a href="#contact" class="hover:text-[var(--neon-pink)] transition">Get Started</a>
             </nav>
             <button id="mobile-menu-button" class="md:hidden text-white p-2">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </div>
         <div id="mobile-menu" class="hidden md:hidden glass-effect">
-            <a href="#features" class="block py-3 px-6 text-sm hover:bg-gray-700/50">Features</a>
+            <a href="#why-us" class="block py-3 px-6 text-sm hover:bg-gray-700/50">Why Us</a>
+            <a href="#statistics" class="block py-3 px-6 text-sm hover:bg-gray-700/50">Statistics</a>
+            <a href="#pricing" class="block py-3 px-6 text-sm hover:bg-gray-700/50">Pricing</a>
             <a href="#ai-tools" class="block py-3 px-6 text-sm hover:bg-gray-700/50">AI Tools</a>
-            <a href="#about" class="block py-3 px-6 text-sm hover:bg-gray-700/50">Platform</a>
             <a href="#contact" class="block py-3 px-6 text-sm hover:bg-gray-700/50">Get Started</a>
         </div>
     </header>
 
-    <section class="hero-bg min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
-        <img src="https://assets.stickpng.com/images/580b585b2edb169251db0-9.png" alt="Astronaut" class="absolute z-10 w-32 md:w-56 bottom-20 left-5 md:left-10 opacity-80 animate-pulse" style="animation-duration: 5s;" onerror="this.style.display='none'">
+    <section class="hero-bg flex items-center justify-center pt-20 relative overflow-hidden">
+        <div class="text-center relative z-10 px-6 py-24">
+            <h1 class="mt-8 text-5xl md:text-7xl font-bold tracking-tight text-white" style="text-shadow: 0 0 15px var(--glow-color), 0 0 25px var(--glow-color-pink);">
+                AdStronauts
+            </h1>
+            <p class="mt-4 text-lg md:text-xl text-indigo-300" style="text-shadow: 0 0 10px var(--glow-color);">
+                Launch your brand into orbit
+            </p>
+        </div>
     </section>
 
-    <section id="features" class="py-20 bg-gray-900/50">
+    <section id="why-us" class="py-20">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12">Your Creative Toolkit</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="service-card bg-gray-800 p-8 rounded-lg text-center">
-                    <div class="mb-4"> <svg class="w-16 h-16 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg> </div>
-                    <h3 class="text-2xl font-bold mb-2">Graphic Design Studio</h3>
-                    <p class="text-gray-300">Design eye-catching ad graphics with our easy-to-use templates.</p>
+             <h2 class="text-4xl font-bold text-center mb-12">Why Choose AdStronauts?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Panel 1 -->
+                <div class="glass-effect p-8 rounded-lg text-center">
+                     <svg class="w-16 h-16 mx-auto text-purple-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <h3 class="text-2xl font-bold mb-2">Lightning Fast Creation</h3>
+                    <p class="text-gray-400 font-sans">Generate entire campaigns in minutes, not days. Go from concept to launch at warp speed.</p>
                 </div>
-                <div class="service-card bg-gray-800 p-8 rounded-lg text-center">
-                    <div class="mb-4"> <svg class="w-16 h-16 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> </div>
-                    <h3 class="text-2xl font-bold mb-2">Video Ad Creator</h3>
-                    <p class="text-gray-300">Produce professional-quality video ads in minutes, no experience required.</p>
+                 <!-- Panel 2 -->
+                <div class="glass-effect p-8 rounded-lg text-center">
+                    <svg class="w-16 h-16 mx-auto text-purple-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    <h3 class="text-2xl font-bold mb-2">Powered by AI</h3>
+                    <p class="text-gray-400 font-sans">Leverage the power of cutting-edge AI to write copy, generate ideas, and build creative assets.</p>
                 </div>
-                <div class="service-card bg-gray-800 p-8 rounded-lg text-center">
-                    <div class="mb-4"> <svg class="w-16 h-16 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> </div>
-                    <h3 class="text-2xl font-bold mb-2">Social Post Automation</h3>
-                    <p class="text-gray-300">Plan and schedule your social content from a single command center.</p>
+                 <!-- Panel 3 -->
+                <div class="glass-effect p-8 rounded-lg text-center">
+                    <svg class="w-16 h-16 mx-auto text-purple-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                    <h3 class="text-2xl font-bold mb-2">Launch-Ready Quality</h3>
+                    <p class="text-gray-400 font-sans">Get high-resolution videos and professional assets ready for any marketing channel.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="statistics" class="py-20 bg-gray-900/50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12">AI-Powered Results</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+                <div class="flex flex-col items-center">
+                    <div class="stat-circle" data-goal="90">0%</div>
+                    <h3 class="text-2xl font-bold mt-4 mb-2">Faster Campaign Creation</h3>
+                    <p class="text-gray-400 font-sans">Reduce your creative workflow from weeks to hours.</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="stat-circle" data-goal="300">0%</div>
+                    <h3 class="text-2xl font-bold mt-4 mb-2">Increase in Engagement</h3>
+                    <p class="text-gray-400 font-sans">AI-optimized content that captures attention and drives interaction.</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="stat-circle" data-goal="75">0%</div>
+                    <h3 class="text-2xl font-bold mt-4 mb-2">Reduction in Creative Costs</h3>
+                    <p class="text-gray-400 font-sans">Slash your production budget without sacrificing quality.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12">Video Packages</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Pricing Card 1 -->
+                <div class="pricing-card glass-effect p-8 rounded-lg flex flex-col">
+                    <h3 class="text-2xl font-bold text-center">Ignition</h3>
+                    <p class="text-center text-purple-400 mb-6 font-sans">For quick launches</p>
+                    <div class="text-center my-4">
+                        <span class="text-5xl font-bold">$149</span>
+                    </div>
+                    <ul class="space-y-4 text-gray-300 flex-grow font-sans">
+                        <li>✔️ 15-30 second video</li>
+                        <li>✔️ 1 Revision</li>
+                        <li>✔️ Stock footage & music</li>
+                        <li>✔️ 1080p HD Quality</li>
+                    </ul>
+                    <button class="cta-button mt-8 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg">Choose Plan</button>
+                </div>
+                <!-- Pricing Card 2 (Popular) -->
+                <div class="pricing-card popular glass-effect p-8 rounded-lg flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-purple-500 text-white text-xs font-bold px-4 py-1 transform translate-x-1/4 -translate-y-1/4 rotate-45">POPULAR</div>
+                    <h3 class="text-2xl font-bold text-center">Orbit</h3>
+                    <p class="text-center text-purple-400 mb-6 font-sans">For growing brands</p>
+                    <div class="text-center my-4">
+                        <span class="text-5xl font-bold">$299</span>
+                    </div>
+                    <ul class="space-y-4 text-gray-300 flex-grow font-sans">
+                        <li>✔️ 30-60 second video</li>
+                        <li>✔️ 3 Revisions</li>
+                        <li>✔️ Premium stock footage & music</li>
+                        <li>✔️ 4K Ultra HD Quality</li>
+                        <li>✔️ Scriptwriting Assistance</li>
+                    </ul>
+                    <button class="cta-button mt-8 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full text-lg">Choose Plan</button>
+                </div>
+                <!-- Pricing Card 3 -->
+                <div class="pricing-card glass-effect p-8 rounded-lg flex flex-col">
+                    <h3 class="text-2xl font-bold text-center">Galaxy</h3>
+                    <p class="text-center text-purple-400 mb-6 font-sans">For market leaders</p>
+                    <div class="text-center my-4">
+                        <span class="text-5xl font-bold">$599</span>
+                    </div>
+                    <ul class="space-y-4 text-gray-300 flex-grow font-sans">
+                        <li>✔️ 60-90 second video</li>
+                        <li>✔️ 5 Revisions</li>
+                        <li>✔️ Premium stock footage & music</li>
+                        <li>✔️ 4K Ultra HD Quality</li>
+                        <li>✔️ Professional Voiceover</li>
+                        <li>✔️ Full Scriptwriting</li>
+                    </ul>
+                    <button class="cta-button mt-8 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg">Choose Plan</button>
                 </div>
             </div>
         </div>
     </section>
     
-    <section id="ai-tools" class="py-20">
+    <section id="ai-tools" class="py-20 bg-gray-900/50">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-4">Launchpad: Your AI Creative Tools</h2>
-            <p class="text-center text-gray-400 max-w-2xl mx-auto mb-12">Let AI be your copilot. Use our Gemini-powered tools to brainstorm ideas and write compelling ad copy in seconds.</p>
+            <p class="text-center text-gray-400 max-w-2xl mx-auto mb-12 font-sans">Let AI be your copilot. Use our Gemini-powered tools to brainstorm ideas and write compelling ad copy in seconds.</p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <div class="glass-effect p-8 rounded-lg">
                     <h3 class="text-3xl font-bold mb-6 text-center">✨ AI Ad Copywriter</h3>
                     <form id="ad-copy-form">
                         <div class="mb-4">
-                            <label for="product-name" class="block text-gray-300 mb-2">Product/Service Name</label>
-                            <input type="text" id="product-name" placeholder="e.g., Quantum Sneakers" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition">
+                            <label for="product-name" class="block text-gray-300 mb-2 font-sans">Product/Service Name</label>
+                            <input type="text" id="product-name" placeholder="e.g., Quantum Sneakers" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition font-sans">
                         </div>
                         <div class="mb-6">
-                            <label for="product-desc" class="block text-gray-300 mb-2">Brief Description</label>
-                            <textarea id="product-desc" rows="3" placeholder="e.g., Comfortable running shoes with self-tying laces." class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition"></textarea>
+                            <label for="product-desc" class="block text-gray-300 mb-2 font-sans">Brief Description</label>
+                            <textarea id="product-desc" rows="3" placeholder="e.g., Comfortable running shoes with self-tying laces." class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition font-sans"></textarea>
                         </div>
                         <div class="text-center mb-6">
                             <button type="submit" id="ad-copy-button" class="ai-button bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg">
@@ -302,8 +380,8 @@
                     <h3 class="text-3xl font-bold mb-6 text-center">✨ Campaign Idea Generator</h3>
                     <form id="idea-generator-form">
                         <div class="mb-6">
-                            <label for="idea-product-desc" class="block text-gray-300 mb-2">What is your product or service?</label>
-                            <textarea id="idea-product-desc" rows="4" placeholder="e.g., AI workout plans for busy professionals." class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition"></textarea>
+                            <label for="idea-product-desc" class="block text-gray-300 mb-2 font-sans">What is your product or service?</label>
+                            <textarea id="idea-product-desc" rows="4" placeholder="e.g., AI workout plans for busy professionals." class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition font-sans"></textarea>
                         </div>
                         <div class="text-center mb-6">
                             <button type="submit" id="idea-generator-button" class="ai-button bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg">
@@ -321,29 +399,14 @@
         </div>
     </section>
 
-    <section id="about" class="py-20 bg-gray-900/50">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-8 md:mb-0">
-                    <img src="https://placehold.co/600x400/1e293b/a78bfa?text=AdStronauts+Platform" alt="Platform Screenshot" class="rounded-lg shadow-lg">
-                </div>
-                <div class="md:w-1/2 md:pl-12">
-                    <h2 class="text-4xl font-bold mb-4">The AdStronauts Platform</h2>
-                    <p class="text-gray-300 mb-4">AdStronauts was built for creators, marketers, and entrepreneurs. Our platform provides an intuitive suite of tools to streamline your creative workflow, taking the complexity out of ad creation.</p>
-                    <p class="text-gray-300">Go from idea to launch faster than ever before. Spend less time on tedious tasks and more time on what matters: growing your business.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-20">
+    <section id="contact" class="py-20 bg-gray-900/50">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">Ready for Liftoff?</h2>
             <div class="max-w-2xl mx-auto glass-effect p-8 rounded-lg">
                 <form id="contact-form">
-                    <div class="mb-4"> <label for="name" class="block text-gray-300 mb-2">Your Name</label> <input type="text" id="name" name="name" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition" required> </div>
-                    <div class="mb-4"> <label for="email" class="block text-gray-300 mb-2">Email Address</label> <input type="email" id="email" name="email" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition" required> </div>
-                    <div class="mb-4"> <label for="message" class="block text-gray-300 mb-2">Your Message</label> <textarea id="message" name="message" rows="4" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition" required></textarea> </div>
+                    <div class="mb-4"> <label for="name" class="block text-gray-300 mb-2 font-sans">Your Name</label> <input type="text" id="name" name="name" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition font-sans" required> </div>
+                    <div class="mb-4"> <label for="email" class="block text-gray-300 mb-2 font-sans">Email Address</label> <input type="email" id="email" name="email" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition font-sans" required> </div>
+                    <div class="mb-4"> <label for="message" class="block text-gray-300 mb-2 font-sans">Your Message</label> <textarea id="message" name="message" rows="4" class="w-full p-3 bg-gray-700/50 rounded-lg border border-gray-600 focus:outline-none focus:border-indigo-500 transition font-sans" required></textarea> </div>
                     <div class="text-center"> <button type="submit" class="cta-button bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg"> Transmit Message </button> </div>
                 </form>
             </div>
@@ -402,13 +465,6 @@
                 galaxy.style.transform = `scale(${Math.random() * 0.5 + 0.5})`;
                 starsContainer.appendChild(galaxy);
             }
-
-            // Parallax scroll for stars
-            window.addEventListener('scroll', () => {
-                const yPos = window.scrollY;
-                starsContainer.style.transform = `translateY(${yPos * 0.3}px)`;
-            });
-
 
             const menuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -474,13 +530,17 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-                    if (!response.ok) throw new Error(`API Error: ${response.status}`);
-                    const result = await response.json();
-                    if (result.candidates && result.candidates[0].content.parts[0]) {
-                        return result.candidates[0].content.parts[0].text;
-                    } else if (result.candidates && result.candidates[0].finishReason) {
-                        // Handle cases where the model finishes for safety reasons etc.
-                        throw new Error(`AI generation stopped: ${result.candidates[0].finishReason}`);
+                    
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                         const errorMessage = data?.error?.message || `API Error: ${response.status}`;
+                         throw new Error(errorMessage);
+                    }
+                    if (data.candidates && data.candidates[0].content.parts[0]) {
+                        return data.candidates[0].content.parts[0].text;
+                    } else if (data.candidates && data.candidates[0].finishReason) {
+                        throw new Error(`AI generation stopped: ${data.candidates[0].finishReason}`);
                     }
                     else {
                         throw new Error("Invalid response structure from API.");
@@ -491,7 +551,6 @@
                 }
             }
             
-            // --- AI Typing Effect ---
             function typeEffect(element, text, onComplete) {
                 let i = 0;
                 element.innerHTML = "";
@@ -508,7 +567,7 @@
                          if (cursor) cursor.remove();
                          if(onComplete) onComplete();
                     }
-                }, 20); // typing speed in ms
+                }, 20);
             }
 
 
@@ -578,21 +637,21 @@
                     ideaResults.innerHTML = `<p class="text-gray-400">The AI couldn't generate ideas. Try being more specific.</p>`;
                     return;
                 }
-                ideas.forEach(idea => {
+                ideas.forEach((idea, index) => {
                     const ideaCard = document.createElement('div');
                     ideaCard.className = 'bg-gray-800/70 p-6 rounded-lg border border-gray-700 opacity-0 transform translate-y-4 transition-all duration-500';
-                    const visualItems = (idea.visual_ideas || []).map(item => `<li class="text-gray-400">${item}</li>`).join('');
-                    const taglineItems = (idea.taglines || []).map(item => `<li class="text-indigo-300 italic">"${item}"</li>`).join('');
+                    ideaCard.style.transitionDelay = `${index * 100}ms`;
+                    const visualItems = (idea.visual_ideas || []).map(item => `<li class="text-gray-400 font-sans">${item}</li>`).join('');
+                    const taglineItems = (idea.taglines || []).map(item => `<li class="text-indigo-300 italic font-sans">"${item}"</li>`).join('');
                     ideaCard.innerHTML = `<h4 class="text-xl font-bold text-purple-400 mb-2">${idea.theme || 'Untitled Idea'}</h4>
                         <p class="font-semibold text-white mt-4 mb-2">Visual Ideas:</p>
                         <ul class="list-disc list-inside space-y-1">${visualItems || '<li>No visuals suggested.</li>'}</ul>
                         <p class="font-semibold text-white mt-4 mb-2">Taglines:</p>
                         <ul class="space-y-1">${taglineItems || '<li>No taglines suggested.</li>'}</ul>`;
                     ideaResults.appendChild(ideaCard);
-                    // Trigger fade-in animation
                     setTimeout(() => {
                         ideaCard.classList.remove('opacity-0', 'translate-y-4');
-                    }, 100);
+                    }, 50);
                 });
             }
 
@@ -602,6 +661,33 @@
                 showAlert("Thank you for your message! We'll be in touch soon.");
                 contactForm.reset();
             });
+
+            // Animate stats on scroll
+            const statsSection = document.getElementById('statistics');
+            const statCircles = document.querySelectorAll('.stat-circle');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        statCircles.forEach(circle => {
+                            const goal = parseInt(circle.dataset.goal);
+                            let current = 0;
+                            const increment = goal / 100;
+                            const interval = setInterval(() => {
+                                current += increment;
+                                if (current >= goal) {
+                                    current = goal;
+                                    clearInterval(interval);
+                                }
+                                circle.textContent = Math.ceil(current) + '%';
+                                circle.style.setProperty('--p', `${Math.ceil(current)}%`);
+                            }, 15);
+                        });
+                        observer.unobserve(statsSection);
+                    }
+                });
+            }, { threshold: 0.5 });
+            observer.observe(statsSection);
+
         });
     </script>
 </body>
